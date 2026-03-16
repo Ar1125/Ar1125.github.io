@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +11,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", "Comic Sans MS", "Chalkboard SE", sans-serif;
         }
 
         body {
@@ -37,16 +37,16 @@
         }
 
         .container {
-            max-width: 1050px;
+            max-width: 800px;        /* 缩小最大宽度，保证单列美观 */
             margin: 0 auto;
             display: grid;
-            grid-template-columns: 1fr;
+            grid-template-columns: 1fr;  /* 强制单列 */
             gap: 24px;
             position: relative;
             z-index: 2;
         }
 
-        /* ===== 顶部栏 名字超大清晰 ===== */
+        /* ===== 顶部栏 ===== */
         .top-bar {
             background: rgba(255, 250, 240, 0.8);
             backdrop-filter: blur(4px);
@@ -60,25 +60,43 @@
             flex-wrap: wrap;
             gap: 15px;
             border-bottom: 5px solid #fec9b0;
+            transition: transform 0.2s ease;
+        }
+        .top-bar:hover {
+            transform: translateY(-2px);
         }
 
-        /* 名字：超大、清晰、深色 */
-        .title h1 {
+        /* 中文名字：楷体+宋体结合，彩色渐变 */
+        .zh .title h1 {
             font-size: 52px;
             font-weight: 700;
-            color: #1f4e5c;          /* 深青绿，非常清楚 */
-            letter-spacing: 2px;
             margin: 0;
             line-height: 1.1;
+            letter-spacing: 2px;
             text-shadow: 2px 2px 0 #fff1ce;
-        }
-        /* 英文名字同样清楚 */
-        .en .title h1 {
-            font-size: 46px;
-            color: #1f4e5c;
+            font-family: "华文楷体", "KaiTi", "宋体", "SimSun", serif;
+            background: linear-gradient(135deg, #3f8da8, #e6688b, #6aab7c, #f7c35c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* 中英文切换按钮 保持可爱但简洁 */
+        /* 英文名字：MV Boli + Comic Sans MS，彩色渐变 */
+        .en .title h1 {
+            font-size: 46px;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.2;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0 #fff1ce;
+            font-family: "MV Boli", "Comic Sans MS", "Chalkboard SE", cursive, sans-serif;
+            background: linear-gradient(135deg, #3f8da8, #e6688b, #6aab7c, #f7c35c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 中英文切换按钮 */
         .lang-toggle button {
             background: #fec8d8;
             border: 3px solid white;
@@ -91,6 +109,10 @@
             cursor: pointer;
             transition: 0.1s;
             border: 2px solid #ffe2e2;
+            font-family: "华文楷体", "KaiTi", "宋体", "SimSun", serif;
+        }
+        .en .lang-toggle button {
+            font-family: "MV Boli", "Comic Sans MS", cursive;
         }
 
         .lang-toggle button:hover {
@@ -98,7 +120,7 @@
             box-shadow: 0 2px 0 #d2919a, 0 6px 12px #f5b5b5;
         }
 
-        /* 基础信息卡片 清爽 */
+        /* 基础信息卡片 */
         .info-card {
             background: rgba(255, 248, 240, 0.85);
             backdrop-filter: blur(4px);
@@ -108,6 +130,12 @@
             box-shadow: 0 12px 0 #b8d9ca, 0 18px 25px #b9d2e6;
             text-align: center;
             border-bottom: 6px solid #bde0cf;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+            cursor: pointer;
+        }
+        .info-card:hover {
+            transform: translateY(-6px) scale(1.01);
+            box-shadow: 0 18px 0 #aecdbd, 0 25px 30px #b0d0e0;
         }
 
         .info-item {
@@ -121,16 +149,13 @@
             border: 2px solid #bfe1d0;
             font-weight: 500;
             box-shadow: 0 2px 0 #ffe0cb;
+            font-family: "华文楷体", "KaiTi", "宋体", "SimSun", serif;
+        }
+        .en .info-item {
+            font-family: "MV Boli", "Comic Sans MS", cursive;
         }
 
-        /* 内容网格 */
-        .content-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 22px;
-        }
-
-        /* 卡片样式 柔和 */
+        /* 卡片样式 — 按钮动画 */
         .content-card {
             background: rgba(255, 254, 250, 0.9);
             backdrop-filter: blur(4px);
@@ -139,15 +164,19 @@
             border: 4px solid white;
             box-shadow: 0 12px 0 #aecdbd, 0 20px 28px #c2d8ea;
             border-bottom: 7px solid #fec9bb;
-            transition: 0.2s;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.2);
+            width: 100%;
+            cursor: pointer;
         }
 
         .content-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 14px 0 #aecdbd, 0 24px 30px #c9deef;
+            transform: translateY(-8px) scale(1.02) rotate(0.3deg);
+            box-shadow: 0 18px 0 #9fc0b0, 0 28px 35px #c9deef;
+            border-bottom-width: 9px;
+            border-bottom-color: #feb0a0;
         }
 
-        /* 卡片标题 清晰不浮夸 */
+        /* 卡片标题 */
         .content-card h2 {
             font-size: 30px;
             font-weight: 600;
@@ -158,9 +187,13 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            font-family: "华文楷体", "KaiTi", "宋体", "SimSun", serif;
+        }
+        .en .content-card h2 {
+            font-family: "MV Boli", "Comic Sans MS", cursive;
         }
 
-        /* 保留一点小图标，但很小清新 */
+        /* 小图标 */
         .content-card h2::before {
             content: "🍀";
             font-size: 32px;
@@ -172,7 +205,7 @@
         .practice-card h2::before { content: "✏️"; }
         .self-card h2::before { content: "💭"; }
 
-        /* 列表样式 整洁 */
+        /* 列表样式 */
         .content-card ul {
             padding-left: 5px;
             list-style: none;
@@ -181,20 +214,26 @@
         .content-card li {
             margin: 16px 0;
             font-size: 18px;
-            color: #1f5552;
+            color: #1f6259;
             background: #f7fcf7;
             padding: 12px 18px 12px 42px;
             border-radius: 30px 10px 30px 10px;
             border: 2px solid #cce5d8;
             position: relative;
-            transition: 0.1s;
+            transition: 0.2s;
             box-shadow: 0 3px 0 #d6e9dd;
             font-weight: 450;
+            font-family: "华文楷体", "KaiTi", "宋体", "SimSun", serif;
+        }
+        .en .content-card li {
+            font-family: "MV Boli", "Comic Sans MS", cursive;
+            font-size: 17px;
         }
 
         .content-card li:hover {
             background: #f3ffee;
             border-color: #f9b8c0;
+            transform: translateX(5px);
         }
 
         .content-card li::before {
@@ -211,9 +250,13 @@
             padding: 12px 20px;
             border-radius: 40px;
             border: 3px solid white;
-            color: #1b6259;
+            color: #1b7065;
             box-shadow: inset 0 -2px 0 #c7e0cd;
             margin-bottom: 18px;
+            font-family: "华文楷体", "KaiTi", "宋体", "SimSun", serif;
+        }
+        .en .content-card p {
+            font-family: "MV Boli", "Comic Sans MS", cursive;
         }
 
         /* 英文默认隐藏 */
@@ -223,14 +266,11 @@
 
         /* 手机适配 */
         @media (max-width: 650px) {
-            .title h1 {
+            .zh .title h1 {
                 font-size: 42px;
             }
             .en .title h1 {
                 font-size: 38px;
-            }
-            .content-grid {
-                grid-template-columns: 1fr;
             }
             .info-item {
                 font-size: 16px;
@@ -239,7 +279,7 @@
             }
         }
 
-        /* 简单小花瓣 减少数量 更低调 */
+        /* 简单小花瓣 */
         .petal {
             position: fixed;
             top: -10px;
@@ -259,13 +299,13 @@
     </style>
 </head>
 <body>
-    <!-- 极少量飘落小花瓣，不抢眼 -->
+    <!-- 极少量飘落小花瓣 -->
     <div class="petal" style="left: 10%; animation-delay: 0s;">🌸</div>
     <div class="petal" style="left: 30%; animation-delay: 5s;">🍃</div>
     <div class="petal" style="left: 70%; animation-delay: 2s;">🌸</div>
 
     <div class="container">
-        <!-- 顶部栏 只有名字和切换按钮 -->
+        <!-- 顶部栏 名字彩色 -->
         <div class="top-bar">
             <div class="title">
                 <div class="zh">
@@ -280,7 +320,7 @@
             </div>
         </div>
 
-        <!-- 基础信息卡片 干净 -->
+        <!-- 基础信息卡片 -->
         <div class="info-card">
             <div class="zh">
                 <span class="info-item">📱 183-6527-5193</span>
@@ -298,7 +338,7 @@
             </div>
         </div>
 
-        <!-- 内容网格 简洁但保留可爱元素 -->
+        <!-- 内容网格 单列布局 -->
         <div class="content-grid">
             <!-- 教育经历卡片 -->
             <div class="content-card edu-card">
