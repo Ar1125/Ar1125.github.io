@@ -1,60 +1,407 @@
 # Ar1125.github.io# 我的个人主页 | Personal Homepage
-<button onclick="toggleLang()">中 / EN</button>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张娅琪 · 个人简历</title>
+    <style>
+        /* ----- 治愈春日色：蓝粉青绿白，干净可爱 ----- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", "Comic Sans MS", "Chalkboard SE", sans-serif;
+        }
 
-<script>
-function toggleLang() {
-  let cn = document.querySelectorAll('.cn');
-  let en = document.querySelectorAll('.en');
-  cn.forEach(e => e.style.display = e.style.display === 'none' ? 'block' : 'none');
-  en.forEach(e => e.style.display = e.style.display === 'none' ? 'block' : 'none');
-}
-window.onload = function() {
-  document.querySelectorAll('.en').forEach(e => e.style.display = 'none');
-}
-</script>
+        body {
+            /* 蓝粉渐变天空 — 春意盎然，但不喧宾夺主 */
+            background: linear-gradient(155deg, #d2e9ff 0%, #ffe2df 60%, #daf2d4 100%);
+            min-height: 100vh;
+            padding: 35px 20px;
+            position: relative;
+        }
 
----
+        /* 极简可爱小点装饰，不干扰阅读 */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#fec8d0 4px, transparent 4px);
+            background-size: 70px 70px;
+            opacity: 0.25;
+            pointer-events: none;
+            z-index: 0;
+        }
 
-<div class="cn">
-# 基本信息
-- 姓名：张娅琪
-- 学校/专业：华东政法大学 会计专业
-- 研究/职业方向：暂无
-- 邮箱：1643434837@qq.com
+        .container {
+            max-width: 1050px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            position: relative;
+            z-index: 2;
+        }
 
-# 个人简介
-我是一名学习能力强、认真负责的学生，具备良好的逻辑思维与数据分析能力，熟悉Python、统计分析与写作表达，对舞弊与监察领域有浓厚兴趣，希望在相关方向持续深造与实践。
+        /* ===== 顶部栏 名字超大清晰 ===== */
+        .top-bar {
+            background: rgba(255, 250, 240, 0.8);
+            backdrop-filter: blur(4px);
+            padding: 20px 30px;
+            border-radius: 50px;
+            box-shadow: 0 8px 0 #b3d1c2, 0 15px 25px rgba(170, 200, 210, 0.4);
+            border: 3px solid #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            border-bottom: 5px solid #fec9b0;
+        }
 
-# 技能
-- Python 数据分析
-- 统计/计量分析
-- 文档写作与整理
-- 信息检索与资料分析
+        /* 名字：超大、清晰、深色 */
+        .title h1 {
+            font-size: 52px;
+            font-weight: 700;
+            color: #1f4e5c;          /* 深青绿，非常清楚 */
+            letter-spacing: 2px;
+            margin: 0;
+            line-height: 1.1;
+            text-shadow: 2px 2px 0 #fff1ce;
+        }
+        /* 英文名字同样清楚 */
+        .en .title h1 {
+            font-size: 46px;
+            color: #1f4e5c;
+        }
 
-# 教育经历
-- XXX学校 — XXX专业（至今）
-</div>
+        /* 中英文切换按钮 保持可爱但简洁 */
+        .lang-toggle button {
+            background: #fec8d8;
+            border: 3px solid white;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-size: 20px;
+            font-weight: 600;
+            color: #1f5b5b;
+            box-shadow: 0 5px 0 #d2919a, 0 8px 15px #f5c8c8;
+            cursor: pointer;
+            transition: 0.1s;
+            border: 2px solid #ffe2e2;
+        }
 
-<div class="en">
-# Basic Info
-- Name: XXX
-- School/Major: XXX University, XXX
-- Research/Interest: XXX
-- Email: XXX@xxx.com
+        .lang-toggle button:hover {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 #d2919a, 0 6px 12px #f5b5b5;
+        }
 
-# About Me
-I am a diligent and quick-learning student with strong logical thinking and data analysis skills. Proficient in Python, statistical analysis, and academic writing, I am deeply interested in XX and eager to pursue further study and practical projects.
+        /* 基础信息卡片 清爽 */
+        .info-card {
+            background: rgba(255, 248, 240, 0.85);
+            backdrop-filter: blur(4px);
+            padding: 28px 25px;
+            border-radius: 40px 40px 40px 10px;
+            border: 4px solid #ffffff;
+            box-shadow: 0 12px 0 #b8d9ca, 0 18px 25px #b9d2e6;
+            text-align: center;
+            border-bottom: 6px solid #bde0cf;
+        }
 
-# Skills
-- Python Data Analysis
-- Statistical & Econometric Analysis
-- Academic Writing
-- Information Retrieval & Data Processing
+        .info-item {
+            font-size: 19px;
+            margin: 8px 18px;
+            color: #2c5f6e;
+            background: rgba(255, 255, 255, 0.7);
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 40px;
+            border: 2px solid #bfe1d0;
+            font-weight: 500;
+            box-shadow: 0 2px 0 #ffe0cb;
+        }
 
-# Education
-- XXX University — XXX (Present)
-</div>
+        /* 内容网格 */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 22px;
+        }
 
----
-最后更新：2026年3月16日
-Last updated: 2026-03-16
+        /* 卡片样式 柔和 */
+        .content-card {
+            background: rgba(255, 254, 250, 0.9);
+            backdrop-filter: blur(4px);
+            padding: 28px 25px;
+            border-radius: 40px 40px 25px 25px;
+            border: 4px solid white;
+            box-shadow: 0 12px 0 #aecdbd, 0 20px 28px #c2d8ea;
+            border-bottom: 7px solid #fec9bb;
+            transition: 0.2s;
+        }
+
+        .content-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 14px 0 #aecdbd, 0 24px 30px #c9deef;
+        }
+
+        /* 卡片标题 清晰不浮夸 */
+        .content-card h2 {
+            font-size: 30px;
+            font-weight: 600;
+            color: #2f7a7a;
+            margin: 0 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 4px dotted #feb7c5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 保留一点小图标，但很小清新 */
+        .content-card h2::before {
+            content: "🍀";
+            font-size: 32px;
+            filter: drop-shadow(0 2px 2px #bbddbb);
+        }
+
+        .edu-card h2::before { content: "📘"; }
+        .award-card h2::before { content: "🏅"; }
+        .practice-card h2::before { content: "✏️"; }
+        .self-card h2::before { content: "💭"; }
+
+        /* 列表样式 整洁 */
+        .content-card ul {
+            padding-left: 5px;
+            list-style: none;
+        }
+
+        .content-card li {
+            margin: 16px 0;
+            font-size: 18px;
+            color: #1f5552;
+            background: #f7fcf7;
+            padding: 12px 18px 12px 42px;
+            border-radius: 30px 10px 30px 10px;
+            border: 2px solid #cce5d8;
+            position: relative;
+            transition: 0.1s;
+            box-shadow: 0 3px 0 #d6e9dd;
+            font-weight: 450;
+        }
+
+        .content-card li:hover {
+            background: #f3ffee;
+            border-color: #f9b8c0;
+        }
+
+        .content-card li::before {
+            content: "🌱";
+            position: absolute;
+            left: 12px;
+            top: 10px;
+            font-size: 22px;
+        }
+
+        .content-card p {
+            font-size: 19px;
+            background: #ecf9f0;
+            padding: 12px 20px;
+            border-radius: 40px;
+            border: 3px solid white;
+            color: #1b6259;
+            box-shadow: inset 0 -2px 0 #c7e0cd;
+            margin-bottom: 18px;
+        }
+
+        /* 英文默认隐藏 */
+        .en {
+            display: none;
+        }
+
+        /* 手机适配 */
+        @media (max-width: 650px) {
+            .title h1 {
+                font-size: 42px;
+            }
+            .en .title h1 {
+                font-size: 38px;
+            }
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .info-item {
+                font-size: 16px;
+                display: block;
+                margin: 8px 0;
+            }
+        }
+
+        /* 简单小花瓣 减少数量 更低调 */
+        .petal {
+            position: fixed;
+            top: -10px;
+            color: #fcc9d4;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 5;
+            animation: fall 12s linear infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-10vh) rotate(0deg); }
+            100% { transform: translateY(110vh) rotate(200deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 极少量飘落小花瓣，不抢眼 -->
+    <div class="petal" style="left: 10%; animation-delay: 0s;">🌸</div>
+    <div class="petal" style="left: 30%; animation-delay: 5s;">🍃</div>
+    <div class="petal" style="left: 70%; animation-delay: 2s;">🌸</div>
+
+    <div class="container">
+        <!-- 顶部栏 只有名字和切换按钮 -->
+        <div class="top-bar">
+            <div class="title">
+                <div class="zh">
+                    <h1>张娅琪</h1>
+                </div>
+                <div class="en">
+                    <h1>Zhang Yaqi</h1>
+                </div>
+            </div>
+            <div class="lang-toggle">
+                <button onclick="toggleLang()">中 / EN</button>
+            </div>
+        </div>
+
+        <!-- 基础信息卡片 干净 -->
+        <div class="info-card">
+            <div class="zh">
+                <span class="info-item">📱 183-6527-5193</span>
+                <span class="info-item">📧 1643434837@qq.com</span>
+                <span class="info-item">📍 上海 · 华东政法大学</span>
+                <span class="info-item">📚 会计学（司法会计）本科</span>
+                <span class="info-item">🗓️ 2026.03</span>
+            </div>
+            <div class="en">
+                <span class="info-item">📱 183-6527-5193</span>
+                <span class="info-item">📧 1643434837@qq.com</span>
+                <span class="info-item">📍 Shanghai · ECUPL</span>
+                <span class="info-item">📚 Accounting (Judicial)</span>
+                <span class="info-item">🗓️ 2026.03</span>
+            </div>
+        </div>
+
+        <!-- 内容网格 简洁但保留可爱元素 -->
+        <div class="content-grid">
+            <!-- 教育经历卡片 -->
+            <div class="content-card edu-card">
+                <div class="zh">
+                    <h2>教育经历</h2>
+                    <p>2024.09 – 至今 · 华东政法大学 · 会计学（司法会计方向）</p>
+                    <ul>
+                        <li>大学英语四六级（CET-4 / CET-6）</li>
+                        <li>基础法语（日常会话）</li>
+                    </ul>
+                </div>
+                <div class="en">
+                    <h2>Education</h2>
+                    <p>2024.09 – Present · ECUPL · Accounting (Judicial)</p>
+                    <ul>
+                        <li>CET-4 & CET-6</li>
+                        <li>Elementary French</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 荣誉奖项卡片 -->
+            <div class="content-card award-card">
+                <div class="zh">
+                    <h2>荣誉奖项</h2>
+                    <ul>
+                        <li>华东政法大学综合三等奖学金</li>
+                        <li>第十二届“青莲”杯绘画类二等奖</li>
+                        <li>2025年度“我为资助代言”十佳宣传大使 二等奖</li>
+                        <li>《山水新韵》入选马院新思想概论课实践优秀范例</li>
+                    </ul>
+                </div>
+                <div class="en">
+                    <h2>Awards</h2>
+                    <ul>
+                        <li>Third Prize Scholarship (ECUPL)</li>
+                        <li>2nd Prize – 12th Qinglian Painting Cup</li>
+                        <li>2nd Prize – Top 10 Financial Aid Ambassador 2025</li>
+                        <li>"Shanshui Xinyun" – Excellent Teaching Example</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 学生工作与实践卡片 -->
+            <div class="content-card practice-card">
+                <div class="zh">
+                    <h2>学生工作 · 实践</h2>
+                    <ul>
+                        <li>四星社团团支书 · 协助举办画展 · 联合团日活动</li>
+                        <li>志愿服务：返校招生宣传、福利院陪伴自闭症儿童、党群传统文化宣传</li>
+                        <li>刀笔油画特长，清明摆摊个人半天销售额超1000元</li>
+                        <li>多次主持校级运动会、元旦晚会等大型活动</li>
+                    </ul>
+                </div>
+                <div class="en">
+                    <h2>Practice</h2>
+                    <ul>
+                        <li>League Branch Secretary of Four-Star Society</li>
+                        <li>Volunteer: admission promotion, accompanying autistic children, cultural activities</li>
+                        <li>Knife & brush oil painting – sold over 1000¥ in half day</li>
+                        <li>Hosted university sports meets & New Year galas</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 自我评价卡片 -->
+            <div class="content-card self-card">
+                <div class="zh">
+                    <h2>自我评价</h2>
+                    <ul>
+                        <li>认真负责，注重细节，执行力强</li>
+                        <li>主动学习，乐于探索不同领域</li>
+                        <li>良好的组织策划与沟通协调能力</li>
+                        <li>兼具专业学习与绘画、文案、主持等特长</li>
+                    </ul>
+                </div>
+                <div class="en">
+                    <h2>Self-Evaluation</h2>
+                    <ul>
+                        <li>Responsible, detail-oriented, strong execution</li>
+                        <li>Eager to learn, explore various fields</li>
+                        <li>Good at planning, organizing and communicating</li>
+                        <li>Professional knowledge + skills: painting, copywriting, hosting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleLang() {
+            const cn = document.querySelectorAll('.zh');
+            const en = document.querySelectorAll('.en');
+            cn.forEach(el => el.style.display = el.style.display === 'none' ? 'block' : 'none');
+            en.forEach(el => el.style.display = el.style.display === 'none' ? 'block' : 'none');
+        }
+
+        window.onload = function() {
+            // 确保英文初始隐藏
+            document.querySelectorAll('.en').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.zh').forEach(el => el.style.display = 'block');
+        };
+    </script>
+</body>
+</html>
