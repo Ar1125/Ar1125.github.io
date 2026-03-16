@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Name · Academic Profile</title>
+    <!-- 简洁、现代的学术风格，完全在GitHub网页端可编辑，无需构建工具 -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            background: white;
+            border-radius: 28px;
+            box-shadow: 0 20px 35px -8px rgba(0, 20, 40, 0.15);
+            padding: 2.5rem 2.8rem;
+            transition: all 0.2s;
+        }
+
+        /* 语言切换栏 */
+        .lang-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .lang-btn {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            background-color: #f1f4f9;
+            color: #334155;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .lang-btn.active {
+            background-color: #1e293b;
+            color: white;
+            border-color: #1e293b;
+        }
+
+        /* 头部信息 */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #e9edf3;
+            padding-bottom: 1.8rem;
+        }
+
+        .name-title h1 {
+            font-size: 2.6rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #0f172a;
+            line-height: 1.2;
+        }
+
+        .badge {
+            background: #eef2f8;
+            color: #1e3a8a;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        .contact-info {
+            background: #f8fafd;
+            padding: 1rem 1.8rem;
+            border-radius: 60px;
+            font-size: 0.95rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.02);
+        }
+
+        .contact-info span {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .contact-info i { 
+            font-style: normal; 
+            font-weight: 600; 
+            color: #4b5563;
+            opacity: 0.8;
+        }
+
+        /* 模块通用 */
+        .section {
+            margin: 2.2rem 0 2.5rem 0;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+            font-weight: 650;
+            letter-spacing: -0.01em;
+            border-left: 6px solid #2c3e50;
+            padding-left: 1rem;
+            margin-bottom: 1.4rem;
+            color: #0b1e33;
+        }
+
+        /* 双语内容块：默认隐藏一种语言，通过js切换显示 */
+        .lang-zh, .lang-en {
+            display: none;
+        }
+
+        body[lang="zh"] .lang-zh,
+        body[lang="en"] .lang-en {
+            display: block;
+        }
+
+        body[lang="zh"] .lang-btn-zh,
+        body[lang="en"] .lang-btn-en {
+            background-color: #1e293b;
+            color: white;
+        }
+
+        /* 简介卡片 */
+        .bio-card {
+            background-color: #f2f6fd;
+            border-radius: 28px;
+            padding: 1.8rem 2rem;
+            font-size: 1.1rem;
+            border: 1px solid #dfe7f3;
+            margin: 1.2rem 0;
+        }
+
+        /* 技能标签 */
+        .skills-panel {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 1.2rem;
+            margin: 1.2rem 0 0.8rem;
+        }
+
+        .skill-tag {
+            background: white;
+            border: 1.5px solid #dde3ed;
+            padding: 0.6rem 1.5rem;
+            border-radius: 60px;
+            font-weight: 500;
+            font-size: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            transition: 0.1s;
+        }
+
+        .skill-tag:hover {
+            border-color: #7c8ba0;
+            background: #fbfdff;
+        }
+
+        /* 教育经历列表 */
+        .edu-item {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px dashed #cad1de;
+            padding: 1.2rem 0 0.8rem;
+        }
+
+        .edu-left {
+            font-weight: 650;
+            font-size: 1.2rem;
+        }
+
+        .edu-major {
+            color: #2c3e50;
+            font-weight: 500;
+            margin-left: 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid #b3c2d4;
+        }
+
+        .edu-date {
+            color: #4b6584;
+            background: #ecf1f7;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* 最后更新 */
+        .last-updated {
+            margin-top: 3rem;
+            font-size: 0.95rem;
+            color: #5f6c84;
+            border-top: 2px solid #eef3f9;
+            padding-top: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .update-badge {
+            background: #eef3f9;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+        }
+
+        .icon-emoji {
+            font-size: 1.1rem;
+            margin-right: 0.2rem;
+        }
+
+        /* 移动端优化 */
+        @media (max-width: 700px) {
+            .container { padding: 1.5rem; }
+            .header { flex-direction: column; align-items: start; gap: 1.2rem; }
+            .contact-info { border-radius: 30px; padding: 0.8rem 1.5rem; }
+            .edu-item { flex-direction: column; gap: 0.5rem; }
+            .edu-major { margin-left: 0; padding-left: 0; border-left: none; }
+        }
+
+        .highlight-note {
+            background: #fff9ed;
+            border-radius: 18px;
+            padding: 0.8rem 1.5rem;
+            margin-top: 1rem;
+            border-left: 4px solid #e67e22;
+        }
+    </style>
+</head>
+<body lang="zh">
+    <div class="container">
+
+        <!-- 语言切换按钮 -->
+        <div class="lang-bar">
+            <button class="lang-btn lang-btn-zh" id="btn-zh" onclick="switchLang('zh')">🇨🇳 中文</button>
+            <button class="lang-btn lang-btn-en" id="btn-en" onclick="switchLang('en')">🇬🇧 English</button>
+        </div>
+
+        <!-- ========== 中文内容 ========== -->
+        <div class="lang-zh">
+            <div class="header">
+                <div class="name-title">
+                    <h1>陈欣然 <span style="font-weight:400; font-size:1.6rem; color:#43627f;">| 应用经济学</span></h1>
+                    <div class="badge">🔍 研究兴趣：发展经济学 · 政策评估 · 劳动力市场</div>
+                </div>
+                <div class="contact-info">
+                    <span><i>📧</i> xinran.chen@university.edu</span>
+                    <span><i>🎓</i> 清华大学 / 经济管理学院</span>
+                </div>
+            </div>
+
+            <!-- 个人简介 -->
+            <div class="section">
+                <div class="section-title">📋 个人简介</div>
+                <div class="bio-card">
+                    经济学博士生（直博），拥有两年研究助理经验，擅长使用微观调查数据进行政策影响评估。研究聚焦于教育与减贫议题，熟悉因果推断方法。具备优秀的计量分析与中英文学术写作能力，乐于跨学科合作，将严谨的经济学分析应用于现实问题。
+                </div>
+            </div>
+
+            <!-- 技能 -->
+            <div class="section">
+                <div class="section-title">⚙️ 核心技能</div>
+                <div class="skills-panel">
+                    <span class="skill-tag">📈 计量经济学 (Stata, R)</span>
+                    <span class="skill-tag">🐍 Python (Pandas, NumPy)</span>
+                    <span class="skill-tag">📊 数据可视化</span>
+                    <span class="skill-tag">🧪 因果推断 / DID / IV / RDD</span>
+                    <span class="skill-tag">✍️ 学术写作与报告</span>
+                    <span class="skill-tag">🗣️ 英语流利 (TOEFL 105)</span>
+                </div>
+                <div class="highlight-note">
+                    💡 目前正在学习机器学习方法（随机森林、Lasso）在经济学预测中的应用。
+                </div>
+            </div>
+
+            <!-- 教育经历/课程经历 -->
+            <div class="section">
+                <div class="section-title">📖 教育经历</div>
+                <div class="edu-item">
+                    <span class="edu-left">清华大学 · 应用经济学博士 (直博)</span>
+                    <span class="edu-major">发展经济学方向</span>
+                    <span class="edu-date">2024 – 至今</span>
+                </div>
+                <div class="edu-item">
+                    <span class="edu-left">复旦大学 · 经济学学士</span>
+                    <span class="edu-major">数据科学辅修</span>
+                    <span class="edu-date">2020 – 2024</span>
+                </div>
+                <div style="margin-top:1.5rem; background-color:#f9fcff; padding:1rem 1.8rem; border-radius:20px;">
+                    <span style="font-weight:600;">📘 高阶课程：</span> 高级计量经济学I/II、政策评估方法、面板数据分析、机器学习与社会科学、因果推断前沿、中国经济发展专题。
+                </div>
+            </div>
+
+            <!-- 最后更新日期 -->
+            <div class="last-updated">
+                <span><span class="icon-emoji">🕒</span> 最后更新：2026年3月16日</span>
+                <span class="update-badge">📌 开放博士生申请 & 研究助理机会</span>
+            </div>
+        </div>
+
+        <!-- ========== 英文内容 ========== -->
+        <div class="lang-en">
+            <div class="header">
+                <div class="name-title">
+                    <h1>Xinran Chen <span style="font-weight:400; font-size:1.6rem; color:#43627f;">| Applied Economics</span></h1>
+                    <div class="badge">🔍 Research: Development Econ · Policy Evaluation · Labor</div>
+                </div>
+                <div class="contact-info">
+                    <span><i>📧</i> xinran.chen@university.edu</span>
+                    <span><i>🎓</i> Tsinghua University / SEM</span>
+                </div>
+            </div>
+
+            <!-- Bio -->
+            <div class="section">
+                <div class="section-title">📋 Bio</div>
+                <div class="bio-card">
+                    Ph.D. student in Applied Economics with two years of RA experience, skilled in policy impact evaluation using micro-survey data. Research focuses on education and poverty reduction, familiar with causal inference methods. Strong capabilities in quantitative analysis and academic writing in both Chinese and English. Passionate about applying rigorous economic analysis to real-world problems through interdisciplinary collaboration.
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="section">
+                <div class="section-title">⚙️ Core Skills</div>
+                <div class="skills-panel">
+                    <span class="skill-tag">📈 Econometrics (Stata, R)</span>
+                    <span class="skill-tag">🐍 Python (Pandas, NumPy)</span>
+                    <span class="skill-tag">📊 Data Visualization</span>
+                    <span class="skill-tag">🧪 Causal Inference / DID / IV / RDD</span>
+                    <span class="skill-tag">✍️ Academic Writing</span>
+                    <span class="skill-tag">🗣️ Fluent English (TOEFL 105)</span>
+                </div>
+                <div class="highlight-note">
+                    💡 Currently learning Machine Learning (Random Forest, Lasso) for economic forecasting.
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="section">
+                <div class="section-title">📖 Education</div>
+                <div class="edu-item">
+                    <span class="edu-left">Tsinghua University · Ph.D. Applied Econ</span>
+                    <span class="edu-major">Development Economics</span>
+                    <span class="edu-date">2024 – present</span>
+                </div>
+                <div class="edu-item">
+                    <span class="edu-left">Fudan University · B.A. Economics</span>
+                    <span class="edu-major">Minor: Data Science</span>
+                    <span class="edu-date">2020 – 2024</span>
+                </div>
+                <div style="margin-top:1.5rem; background-color:#f9fcff; padding:1rem 1.8rem; border-radius:20px;">
+                    <span style="font-weight:600;">📘 Advanced Courses: </span> Advanced Econometrics I/II, Policy Evaluation Methods, Panel Data Analysis, ML for Social Science, Causal Inference, Topics in China's Economic Development.
+                </div>
+            </div>
+
+            <!-- Last updated -->
+            <div class="last-updated">
+                <span><span class="icon-emoji">🕒</span> Last updated: March 16, 2026</span>
+                <span class="update-badge">📌 Open to Ph.D. & RA opportunities</span>
+            </div>
+        </div>
+
+        <!-- 页脚提示 -->
+        <div style="margin-top: 2rem; font-size:0.8rem; text-align:center; color:#8a98aa; border-top: 1px solid #dfe6f0; padding-top:1rem;">
+            🌐 Hosted on GitHub Pages · 中英一键切换 · Designed for HR / Faculty
+        </div>
+    </div>
+
+    <!-- 简单的JavaScript切换语言 -->
+    <script>
+        function switchLang(lang) {
+            document.body.setAttribute('lang', lang);
+            const btnZh = document.getElementById('btn-zh');
+            const btnEn = document.getElementById('btn-en');
+            if (lang === 'zh') {
+                btnZh.classList.add('active');
+                btnEn.classList.remove('active');
+            } else {
+                btnEn.classList.add('active');
+                btnZh.classList.remove('active');
+            }
+        }
+        window.onload = function() {
+            switchLang('zh');
+        };
+    </script>
+</body>
+</html>
